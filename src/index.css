@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --brand:#111827;
+  --accent:#ef4444;
+}
+
+.btn {
+  @apply px-4 py-2 rounded-2xl shadow-lg transition hover:-translate-y-0.5 active:translate-y-0 bg-black text-white;
+}
+.card {
+  @apply bg-white rounded-2xl shadow-lg p-4;
+}
+
+
+body {
+  @apply bg-beige-light text-brand-black font-sans;
+}
