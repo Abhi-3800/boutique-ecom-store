@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState, useRef } from "react";
 import { products } from "../utils/fakeData";
 import WishlistButton from "../components/WishlistButton";
@@ -10,6 +10,7 @@ export default function ProductDetail() {
   const product = products.find((p) => p.id === id);
   const [activeIndex, setActiveIndex] = useState(0);
   const carouselRef = useRef(null);
+  const enquiryRef = useRef(null);
 
   // Demo variant/size/color/qty state
   const [selectedColor, setSelectedColor] = useState(product?.colors?.[0] || "");
@@ -37,13 +38,6 @@ export default function ProductDetail() {
     carouselRef.current.scrollBy({ left: 300, behavior: "smooth" });
   };
 
-  // Breadcrumbs (for navigation & SEO)
-  const breadcrumbs = [
-    { label: "Home", href: "/" },
-    { label: "Shop", href: "/shop" },
-    { label: product.title }
-  ];
-
   // Cart feedback demo
   const addToCartHandler = () => {
     setCartFeedback(true);
@@ -56,8 +50,13 @@ export default function ProductDetail() {
     alert("Product link copied!");
   };
 
+  // Scroll to enquiry form
+  const scrollToEnquiry = () => {
+    enquiryRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <div className="w-full min-h-screen bg-[#f8f5f2] flex flex-col gap-16 px-6 md:px-16 py-16">
+    <div className="w-full min-h-screen bg-[#f8f5f2] flex flex-col gap-16 px-6 md:px-16 py-20">
       {/* Top Section: Product */}
       <div className="flex flex-col md:flex-row gap-10">
         {/* Left: Images */}
@@ -101,82 +100,24 @@ export default function ProductDetail() {
             <Star className="w-5 h-5 fill-[#c8ad7f]" />
             <span className="font-semibold text-lg">{product.rating || "4.7"}</span>
             <span className="text-[#917d63]">({product.reviews?.length || 29} reviews)</span>
-            {/* Add modal trigger for full reviews */}
-            {/* <button className="underline text-xs ml-3 text-[#b49b7f]">Read all</button> */}
           </div>
 
-          <p className="text-[#917d63] text-2xl font-semibold mt-1">
+          {/* Product Price */}
+          {/* <p className="text-[#917d63] text-2xl font-semibold mt-1">
             ₹{Number(product.price).toLocaleString()}
-          </p>
+          </p> */}
           <p className="mt-1 text-[#7f6f54]">{product.description}</p>
 
-          {/* Size & Color */}
-          {/* <div className="flex gap-6 mt-4">
-            {product.colors && (
-              <div>
-                <div className="font-medium text-[#917d63] mb-2">Color</div>
-                <div className="flex gap-2">
-                  {product.colors.map((cl, i) => (
-                    <button
-                      key={cl}
-                      title={cl}
-                      aria-label={cl}
-                      onClick={() => setSelectedColor(cl)}
-                      className={`w-7 h-7 rounded-full border-2 transition-all ${selectedColor === cl
-                        ? "border-[#b49b7f] ring-2 ring-[#ece1d0]" : "border-[#d9cab3]"
-                      }`}
-                      style={{ background: cl }}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-            {product.sizes && (
-              <div>
-                <div className="font-medium text-[#917d63] mb-2">Size</div>
-                <div className="flex gap-2">
-                  {product.sizes.map((sz) => (
-                    <button
-                      key={sz}
-                      aria-label={sz}
-                      onClick={() => setSelectedSize(sz)}
-                      className={`px-3 py-1 rounded-full border transition-all font-medium ${selectedSize === sz
-                        ? "bg-[#b49b7f] text-white border-[#b49b7f]"
-                        : "border-[#d9cab3] bg-[#f8f5f2] text-[#917d63] hover:bg-[#ece1d0]"
-                      }`}
-                    >
-                      {sz}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div> */}
-
-          {/* Quantity */}
-          {/* <div className="flex gap-4 items-center mt-3">
-            <div className="font-medium text-[#917d63]">Qty</div>
-            <button
-              className="w-8 h-8 border border-[#d9cab3] text-[#b49b7f] rounded hover:bg-[#ece1d0]"
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-            >-</button>
-            <span className="w-6 text-center">{quantity}</span>
-            <button
-              className="w-8 h-8 border border-[#d9cab3] text-[#b49b7f] rounded hover:bg-[#ece1d0]"
-              onClick={() => setQuantity(quantity + 1)}
-            >+</button>
-          </div> */}
-
-          {/* Wishlist, Add to Cart, Social Share */}
+          {/* Wishlist, Add to Cart, Social Share, Enquire */}
           <div className="mt-4 flex gap-4 items-center flex-wrap">
-            <WishlistButton product={product} />
-            <button
+            {/* <WishlistButton product={product} /> */}
+            {/* <button
               className="px-7 py-3 bg-[#b49b7f] text-white rounded hover:bg-[#917d63] transition"
               onClick={addToCartHandler}
               aria-label="Add to Cart"
             >
               Add to Cart
-            </button>
+            </button> */}
             <button
               className="bg-transparent px-3 py-2 hover:bg-[#ece1d0] rounded border-2 border-[#ece1d0] text-[#b49b7f] flex items-center gap-2"
               onClick={shareProduct}
@@ -184,6 +125,12 @@ export default function ProductDetail() {
             >
               <Share2 className="w-5 h-5" /> Share
             </button>
+            {/* <button
+              onClick={scrollToEnquiry}
+              className="px-6 py-3 bg-[#917d63] text-white rounded hover:bg-[#7f6f54] transition"
+            >
+              Enquire Now
+            </button> */}
           </div>
 
           {/* Add to Cart Feedback */}
@@ -198,8 +145,8 @@ export default function ProductDetail() {
             <Tabs />
           </div>
 
-          {/* Enquiry */}
-          <div className="mt-10">
+          {/* Enquiry Form */}
+          <div ref={enquiryRef} className="mt-10">
             <EnquiryForm product={product} />
           </div>
         </div>
@@ -231,8 +178,9 @@ export default function ProductDetail() {
             className="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar px-10"
           >
             {relatedProducts.map((item) => (
-              <div
+              <Link
                 key={item.id}
+                to={`/product/${item.id}`}
                 className="flex-1 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 min-w-[180px] bg-white rounded-xl shadow hover:scale-105 hover:shadow-lg transition-transform duration-300"
               >
                 <div className="aspect-[3/4] overflow-hidden rounded-t-xl">
@@ -248,14 +196,11 @@ export default function ProductDetail() {
                   </h3>
                   <p className="text-[#917d63]">₹{item.price}</p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
       </div>
-
-      {/* Modal for product reviews, if you wish */}
-      {/* <ProductReviewsModal /> */}
     </div>
   );
 }
@@ -267,19 +212,31 @@ function Tabs() {
     <div>
       <div className="flex gap-8 border-b-[1.5px] border-[#ece1d0]">
         <button
-          className={`pb-3 font-medium text-lg ${tab === "details" ? "border-b-2 border-[#b49b7f] text-[#b49b7f]" : "text-[#917d63]"}`}
+          className={`pb-3 font-medium text-lg ${
+            tab === "details"
+              ? "border-b-2 border-[#b49b7f] text-[#b49b7f]"
+              : "text-[#917d63]"
+          }`}
           onClick={() => setTab("details")}
         >
           Details
         </button>
         <button
-          className={`pb-3 font-medium text-lg ${tab === "shipping" ? "border-b-2 border-[#b49b7f] text-[#b49b7f]" : "text-[#917d63]"}`}
+          className={`pb-3 font-medium text-lg ${
+            tab === "shipping"
+              ? "border-b-2 border-[#b49b7f] text-[#b49b7f]"
+              : "text-[#917d63]"
+          }`}
           onClick={() => setTab("shipping")}
         >
           Shipping
         </button>
         <button
-          className={`pb-3 font-medium text-lg ${tab === "returns" ? "border-b-2 border-[#b49b7f] text-[#b49b7f]" : "text-[#917d63]"}`}
+          className={`pb-3 font-medium text-lg ${
+            tab === "returns"
+              ? "border-b-2 border-[#b49b7f] text-[#b49b7f]"
+              : "text-[#917d63]"
+          }`}
           onClick={() => setTab("returns")}
         >
           Returns
@@ -287,12 +244,10 @@ function Tabs() {
       </div>
       <div className="mt-4 text-[#7f6f54]">
         {tab === "details" && (
-          <div>
-            <p>
-              All garments are thoughtfully designed and crafted using the finest fabrics.
-              For specific sizing or care queries, please reach out to our boutique staff.
-            </p>
-          </div>
+          <p>
+            All garments are thoughtfully designed and crafted using the finest fabrics.
+            For specific sizing or care queries, please reach out to our boutique staff.
+          </p>
         )}
         {tab === "shipping" && (
           <div className="flex items-center gap-3">
@@ -306,7 +261,8 @@ function Tabs() {
           <div className="flex items-center gap-3">
             <RefreshCcw className="w-5 h-5" />
             <span>
-              Returns accepted within 7 days for unused, unworn items with tags. Read our <a href="/returns" className="underline text-[#b49b7f]">Returns Policy</a>.
+              Returns accepted within 7 days for unused, unworn items with tags. Read our{" "}
+              <a href="/returns" className="underline text-[#b49b7f]">Returns Policy</a>.
             </span>
           </div>
         )}

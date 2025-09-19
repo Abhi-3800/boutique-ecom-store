@@ -98,9 +98,9 @@ export default function Contact() {
           <div className="bg-white rounded-xl shadow-md p-6 text-[#7f6f54]">
             <h2 className="text-2xl font-semibold text-beige-dark mb-4">Visit Our Boutique</h2>
             <p>
-              123 Heritage Street<br />
-              Amritsar, Punjab 143001<br />
-              India
+              D14/457, Noor Fashion Hut, near Apollo Pharmacy<br />
+              Amarkot Road, Putlighar,<br />
+              Amritsar, Punjab 143001, India
             </p>
             <p className="mt-4 font-semibold">Store Hours</p>
             <p>Mon - Fri: 10:00 AM – 7:00 PM</p>
@@ -110,8 +110,8 @@ export default function Contact() {
           {/* Embedded Google Map iframe */}
           <div className="rounded-xl overflow-hidden shadow-md aspect-[16/9]">
             <iframe
-              title="Pehnaava Boutique Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3390.4623022188083!2d74.86983931502231!3d31.634009981385725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39196d4f7c00a7ff%3A0x955b91544edda5cb!2sGolden%20Temple%20Amritsar!5e0!3m2!1sen!2sin!4v1692661809999!5m2!1sen!2sin"
+              title="Nodima Boutique Location"
+              src="https://www.google.com/maps?q=31.632361,74.841528(Noor%20Fashion%20Hut)&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0 }}

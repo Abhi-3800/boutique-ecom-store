@@ -9,12 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.56.0",
     "framer-motion": "^11.0.0",
     "lucide-react": "^0.540.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-feather": "^2.0.10",
     "react-icons": "^5.5.0",
     "react-router-dom": "^6.23.1",
+    "react-slick": "^0.31.0",
+    "slick-carousel": "^1.8.1",
+    "supabase": "^2.39.2",
     "swiper": "^11.2.10"
   },
   "devDependencies": {

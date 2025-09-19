@@ -1,27 +1,38 @@
 import { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Menu, X, ShoppingBag, Heart, ChevronDown } from "lucide-react"
+import logo3 from "../assets/logo10.png" // updated logo with only NODIMA text
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [user, setUser] = useState(null) // track logged-in user
+  const navigate = useNavigate()
 
   const links = [
     { name: "Home", to: "/" },
-    {
-      name: "Collections",
-      to: "/collection",
-      dropdown: [
-        { name: "Sarees", to: "/collection/sarees" },
-        { name: "Kurtas", to: "/collection/kurtas" },
-        { name: "Accessories", to: "/collection/accessories" },
-        { name: "New Arrivals", to: "/collection/new" },
-      ],
-    },
     { name: "About", to: "/about" },
     { name: "Contact", to: "/contact" },
+    {
+      name: "View Store",
+      to: "/collection",
+      dropdown: [
+        { name: "Parandis", to: "/collection" },
+        { name: "Suits", to: "/collection" },
+        { name: "Pallazos", to: "/collection" },
+        { name: "New Arrivals", to: "/collection" },
+      ],
+    },
   ]
+
+  // Check login state
+  useEffect(() => {
+    const loggedUser = localStorage.getItem("user")
+    if (loggedUser) {
+      setUser(JSON.parse(loggedUser))
+    }
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40)
@@ -29,46 +40,58 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  const handleCartClick = () => {
+    if (!user) {
+      navigate("/login") // redirect if not logged in
+    } else {
+      navigate("/cart") // go to cart if logged in
+    }
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem("user")
+    setUser(null)
+    navigate("/") // back to home
+  }
+
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-beige-100/95 shadow-md backdrop-blur-sm" : "bg-beige-50"
+        scrolled
+          ? "bg-beige-100/95 shadow-md backdrop-blur-sm"
+          : "bg-beige-50"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-        {/* Logo */}
-        <Link
-          to="/"
-          className="text-2xl font-bold tracking-wide text-gray-800 hover:text-rose-500 transition-colors"
-        >
-          <span className="text-rose-400">Pehnaava</span>
+      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <Link to="/" className="flex items-center space-x-3">
+          <img
+            src={logo3}
+            alt="ND Logo"
+            className="h-16 w-auto object-contain"
+          />
         </Link>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex space-x-8 font-medium relative">
+        <div className="hidden md:flex flex-1 justify-center space-x-8 font-medium relative">
           {links.map((link) =>
             link.dropdown ? (
               <div
                 key={link.name}
-                className="relative group"
+                className="relative"
                 onMouseEnter={() => setDropdownOpen(true)}
                 onMouseLeave={() => setDropdownOpen(false)}
               >
-                <button
-                  className="flex items-center space-x-1 text-gray-700 hover:text-rose-500 transition-colors duration-200"
-                >
+                <button className="flex items-center space-x-1 text-black-700 hover:text-rose-500 transition-colors duration-200">
                   <span>{link.name}</span>
                   <ChevronDown className="w-4 h-4" />
                 </button>
-
-                {/* Dropdown Menu */}
                 {dropdownOpen && (
                   <div className="absolute left-0 mt-2 w-40 bg-white border border-gray-100 shadow-lg rounded-lg py-2 animate-fadeIn">
                     {link.dropdown.map((d) => (
                       <Link
                         key={d.to}
                         to={d.to}
-                        className="block px-4 py-2 text-gray-700 hover:bg-rose-50 hover:text-rose-500 transition-colors"
+                        className="block px-4 py-2 text-black-700 hover:bg-rose-50 hover:text-rose-500 transition-colors"
                       >
                         {d.name}
                       </Link>
@@ -80,7 +103,7 @@ export default function Navbar() {
               <Link
                 key={link.to}
                 to={link.to}
-                className="relative text-gray-700 hover:text-rose-500 transition-colors duration-200 group"
+                className="relative text-black-700 hover:text-rose-500 transition-colors duration-200 group"
               >
                 {link.name}
                 <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-rose-400 transition-all duration-300 group-hover:w-full"></span>
@@ -89,19 +112,38 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Icons */}
+        {/* Icons + Login/Logout */}
         <div className="hidden md:flex items-center space-x-6">
           <button className="hover:text-rose-500 transition-colors">
             <Heart className="w-5 h-5" />
           </button>
-          <Link to="/login" className="hover:text-rose-500 transition-colors">
+          <button
+            onClick={handleCartClick}
+            className="hover:text-rose-500 transition-colors"
+          >
             <ShoppingBag className="w-5 h-5" />
-          </Link>
+          </button>
+
+          {!user ? (
+            <Link
+              to="/login"
+              className="text-black-700 hover:text-rose-500 transition-colors font-medium"
+            >
+              Login
+            </Link>
+          ) : (
+            <button
+              onClick={handleLogout}
+              className="text-black-700 hover:text-rose-500 transition-colors font-medium"
+            >
+              Logout
+            </button>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-gray-700 hover:text-rose-500"
+          className="md:hidden text-black-700 hover:text-rose-500"
           onClick={() => setMobileOpen(!mobileOpen)}
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -115,7 +157,7 @@ export default function Navbar() {
             link.dropdown ? (
               <div key={link.name}>
                 <button
-                  className="flex items-center justify-between w-full text-gray-800 hover:text-rose-500"
+                  className="flex items-center justify-between w-full text-black-800 hover:text-rose-500"
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
                   {link.name}
@@ -131,7 +173,7 @@ export default function Navbar() {
                       <Link
                         key={d.to}
                         to={d.to}
-                        className="block text-gray-700 hover:text-rose-500"
+                        className="block text-black-700 hover:text-rose-500"
                         onClick={() => setMobileOpen(false)}
                       >
                         {d.name}
@@ -144,7 +186,7 @@ export default function Navbar() {
               <Link
                 key={link.to}
                 to={link.to}
-                className="block text-gray-800 hover:text-rose-500 transition-colors"
+                className="block text-black-800 hover:text-rose-500 transition-colors"
                 onClick={() => setMobileOpen(false)}
               >
                 {link.name}
@@ -152,14 +194,31 @@ export default function Navbar() {
             )
           )}
 
-          {/* Icons in Mobile */}
-          <div className="flex space-x-6 pt-4">
+          {/* Icons + Login in Mobile */}
+          <div className="flex space-x-6 pt-4 items-center">
             <button className="hover:text-rose-500">
               <Heart className="w-5 h-5" />
             </button>
-            <button className="hover:text-rose-500">
+            <button onClick={handleCartClick} className="hover:text-rose-500">
               <ShoppingBag className="w-5 h-5" />
             </button>
+
+            {!user ? (
+              <Link
+                to="/login"
+                className="text-black-700 hover:text-rose-500 transition-colors font-medium"
+                onClick={() => setMobileOpen(false)}
+              >
+                Login
+              </Link>
+            ) : (
+              <button
+                onClick={handleLogout}
+                className="text-black-700 hover:text-rose-500 transition-colors font-medium"
+              >
+                Logout
+              </button>
+            )}
           </div>
         </div>
       )}

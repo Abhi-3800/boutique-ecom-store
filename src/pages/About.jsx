@@ -1,5 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import founder1 from "../assets/founder1.jpg";
+import founder2 from "../assets/founder2.jpg";
+import logo8 from "../assets/logo8.png";
 
 export default function About() {
   return (
@@ -11,23 +15,52 @@ export default function About() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        About Pehnaava
+        About Nodima
       </motion.h1>
 
-      {/* Boutique Story */}
+      {/* ⭐ Our Story (inserted component) */}
       <motion.section
-        className="max-w-3xl mx-auto mb-16 space-y-6 text-lg leading-relaxed text-[#7f6f54]"
-        initial={{ opacity: 0, x: -40 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        viewport={{ once: true }}
+        className="max-w-5xl mx-auto px-6 py-16 mt-16 mb-20 bg-gradient-to-r from-white via-beige-light/40 to-white rounded-3xl shadow-lg flex flex-col md:flex-row items-center gap-10"
       >
-        <p>
-          At <span className="font-semibold text-beige-dark">Pehnaava</span>, we blend
-          timeless tradition with modern elegance. Founded in the heart of Amritsar, our boutique brings you handcrafted apparel and thoughtfully curated collections. Each piece tells a story — weaving heritage, artisan craftsmanship, and contemporary style.
-        </p>
-        <p>
-          Our mission is to empower you to wear confidence, comfort, and culture — all in one frame. We believe luxury lies in quality, fit, and the small details which make fashion personal.
-        </p>
+        {/* Left: Image */}
+        <div className="flex-1">
+          <img
+            src={logo8}
+            alt="Our Story"
+            className="rounded-2xl shadow-md object-cover w-full h-[320px]"
+          />
+        </div>
+
+        {/* Right: Text */}
+        <div className="flex-1 text-center md:text-left">
+          <p className="text-brand-black/70 leading-relaxed mb-5">
+            At <span className="font-semibold text-brand-black">Nodima Boutique</span>, 
+            we believe fashion is more than clothing. It’s a reflection of identity, 
+            confidence, and timeless elegance. What began as a passion for curating 
+            refined styles has grown into a boutique that celebrates women who embrace 
+            sophistication in their everyday lives. 
+          </p>
+          <p className="text-brand-black/70 leading-relaxed mb-6">
+            Each collection is thoughtfully designed, blending heritage craftsmanship 
+            with contemporary aesthetics. From handpicked fabrics to artisanal finishes, 
+            our pieces are made to last, empowering you to express your individuality 
+            with grace.
+          </p>
+          <p className="text-lg font-bold text-brand-black mb-6">
+            “Elegance In Every Stitch”
+          </p>
+
+          <Link
+            to="/collection"
+            className="inline-block bg-beige-dark text-white px-6 py-3 rounded-full shadow hover:bg-brand-black transition"
+          >
+            Discover More
+          </Link>
+        </div>
       </motion.section>
 
       {/* Values */}
@@ -79,12 +112,12 @@ export default function About() {
       >
         <h2 className="text-3xl font-extrabold mb-8 text-center">Meet Our Team</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-          {[ 
-            { name: "Anjali Singh", role: "Founder & Designer", bio: "Passionate about bringing handcrafted fashion to life.", img: "https://i.pravatar.cc/300?img=47" },
-            { name: "Rohan Verma", role: "Head Tailor", bio: "Ensures every stitch is perfect and every fit is flawless.", img: "https://i.pravatar.cc/300?img=48" },
+          {[
+            { name: "Harnoor Chawla", role: "Founder & Designer", bio: "Passionate about bringing handcrafted fashion to life.", img: founder2 },
+            { name: "Arvind Kaur", role: "Founder & Designer", bio: "Ensures every stitch is perfect and every fit is flawless.", img: founder1},
           ].map(({ name, role, bio, img }) => (
             <div key={name} className="flex flex-col items-center text-center space-y-4 p-6 bg-white bg-opacity-50 rounded-lg shadow-md text-[#7f6f54]">
-              <img src={img} alt={name} className="w-32 h-32 rounded-full object-cover border-4 border-beige-light shadow-md" />
+              <img src={img} alt={name}   className="w-32 h-32 rounded-full object-cover object-top border-4 border-beige-light shadow-md" />
               <h3 className="text-xl font-semibold text-beige-dark">{name}</h3>
               <p className="italic text-sm">{role}</p>
               <p className="text-sm leading-relaxed max-w-xs">{bio}</p>

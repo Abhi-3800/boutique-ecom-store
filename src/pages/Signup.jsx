@@ -22,8 +22,8 @@ export default function Signup(){
   }
 
   return (
-    <div className="max-w-md mx-auto px-4 py-12">
-      <h1 className="text-2xl font-bold mb-4">Create account</h1>
+    <div className="max-w-md mx-auto px-4 py-20">
+      <h1 className="text-center text-2xl font-bold mb-4">Create account</h1>
       <form className="grid gap-3" onSubmit={submit}>
         <input className="border rounded-xl px-3 py-2" placeholder="Name" value={name} onChange={e=>setName(e.target.value)} />
         <input className="border rounded-xl px-3 py-2" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} />

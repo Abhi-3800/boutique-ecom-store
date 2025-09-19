@@ -1,7 +1,9 @@
 import { useMemo, useState } from "react"
-import { categories, products } from "../utils/fakeData"
+import { categories } from "../utils/fakeData"
 import ProductCard from "../components/ProductCard"
 import { motion } from "framer-motion"
+import { supabase } from "../services/supabase"
+import React from "react"
 
 export default function Collection() {
   const [query, setQuery] = useState("")
@@ -11,15 +13,34 @@ export default function Collection() {
   const visibleCategories = categories.slice(0, 6)
   const moreCategories = categories.slice(2)
 
+  // Fetch products from Supabase (or use fake data as fallback)
+  const [products, setProducts] = React.useState([]);
+  
+  React.useEffect(() => {
+    const fetchProducts = async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*');
+      console.log(data)
+      if (error) {
+        console.error("Error fetching products:", error);
+
+      } else {
+        setProducts(data);
+      }
+    };
+    fetchProducts();
+  }, []);
+
   const filtered = useMemo(() => {
-    let list = [...products]
-    if (cat !== "all") list = list.filter((p) => p.category === cat)
+    let list = [...products];
+    if (cat !== "all") list = list.filter((p) => p.category === cat);
     if (query.trim())
       list = list.filter((p) =>
-        p.title.toLowerCase().includes(query.toLowerCase())
-      )
-    return list
-  }, [query, cat])
+        (p.title || p.name || "").toLowerCase().includes(query.toLowerCase())
+      );
+    return list;
+  }, [products, query, cat]);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-20">

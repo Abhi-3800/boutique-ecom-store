@@ -3,7 +3,7 @@ import { FaInstagram, FaFacebook, FaPinterest } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-beige-light/40 border-t border-beige-dark/20 mt-20">
+    <footer className="bg-beige-light/40 border-t border-beige-dark/20 mt-15">
       <div className="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-4 gap-10 text-sm">
         
         {/* About */}
@@ -30,8 +30,8 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold text-brand-black mb-3">Contact</h3>
           <ul className="space-y-2 text-gray-600">
-            <li className="flex items-center gap-2"><Phone size={16}/> +91-90000 00000</li>
-            <li className="flex items-center gap-2"><Mail size={16}/> boutique@example.com</li>
+            <li className="flex items-center gap-2"><Phone size={16}/> +91-9814687469</li>
+            <li className="flex items-center gap-2"><Mail size={16}/> <a href="mailto:noorchawla44@gmail.com">noorchawla44@gmail.com</a> </li>
             <li className="flex items-center gap-2"><MapPin size={16}/> Amritsar, Punjab</li>
           </ul>
         </div>
@@ -40,13 +40,13 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold text-brand-black mb-3">Follow Us</h3>
           <div className="flex gap-4">
-            <a href="https://instagram.com" className="p-2 rounded-full bg-white shadow hover:bg-beige-dark hover:text-white transition">
+            <a href="https://www.instagram.com/nodima_designer?igsh=ajYwcWw1NWYxNzRy" target="_blank" className="p-2 rounded-full bg-white shadow hover:bg-beige-dark hover:text-white transition">
               <FaInstagram size={18} />
             </a>
-            <a href="https://facebook.com" className="p-2 rounded-full bg-white shadow hover:bg-beige-dark hover:text-white transition">
+            <a href="https://facebook.com" target="_blank" className="p-2 rounded-full bg-white shadow hover:bg-beige-dark hover:text-white transition">
               <FaFacebook size={18} />
             </a>
-            <a href="https://pinterest.com" className="p-2 rounded-full bg-white shadow hover:bg-beige-dark hover:text-white transition">
+            <a href="https://pinterest.com" target="_blank" className="p-2 rounded-full bg-white shadow hover:bg-beige-dark hover:text-white transition">
               <FaPinterest size={18} />
             </a>
           </div>
@@ -55,7 +55,7 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-beige-dark/10 text-center text-xs text-gray-500 py-4">
-        © {new Date().getFullYear()} Boutique. All rights reserved.
+        © {new Date().getFullYear()} Nodima Designs. All rights reserved.
       </div>
     </footer>
   )

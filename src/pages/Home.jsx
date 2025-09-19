@@ -1,22 +1,20 @@
 import React from "react";
 import Carousel from '../components/Carousel';
 import SocialMedia from '../components/SocialMedia';
-import { products } from '../utils/fakeData';
+import CategoryCollection from '../components/CategoryCollection';
+import CategoryCard from "../components/CategoryCard";
+import { supabase } from "../services/supabase";
 import ProductCard from '../components/ProductCard';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Scissors, Gift, MapPin, ShieldCheck, CreditCard } from "lucide-react";
+import { Instagram } from "react-feather";
 
 // Hero images
 import banner1 from "../assets/hero1.jpg";
 import banner2 from "../assets/hero2.jpeg";
 import banner3 from "../assets/hero3.jpeg";
 
-// Example category images (replace with your actual paths)
-import catDresses from "../assets/hair2.jpg";
-import catSuits from "../assets/hero3.jpeg";
-import catAccessories from "../assets/palazzo1.jpg";
-import catHome from "../assets/cushion1.jpg";
 
 // Example "Shop The Look" images (replace with your actual paths)
 import look1 from "../assets/hero1.jpg";
@@ -26,35 +24,47 @@ export default function Home(){
 
   const heroes = [banner2, banner3, banner1];
 
-  // Replace with your actual categories!
-  const categories = [
-    { label: "Dresses", img: catDresses },
-    { label: "Suits", img: catSuits },
-    { label: "Accessories", img: catAccessories },
-    { label: "Home Decor", img: catHome }
-  ];
+  // Fetch products from Supabase (or use fake data as fallback)
+  const [products, setProducts] = React.useState([]);
+  
+  React.useEffect(() => {
+    const fetchProducts = async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*');
+      if (error) {
+        console.error("Error fetching products:", error);
 
-  // Replace with your actual lookbook images!
-  const shopTheLook = [
-    { img: look1, label: "Festive Look" },
-    { img: look2, label: "Everyday Elegance" }
-  ];
+      } else {
+        setProducts(data);
+      }
+    };
+    fetchProducts();
+  }, []);
 
+  
   return (
-    <div className="font-sans text-brand-black bg-beige-light pb-4">
+    <div className="font-sans text-brand-black bg-beige-light pb-1">
       
-      {/* Floating Chat Widget */}
+      {/* Floating WhatsApp Chat Widget */}
       <a
-        href="https://wa.me/your-number"
+        href="https://wa.me/9814687469"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 bg-beige-dark p-3 rounded-full shadow-lg z-50 hover:bg-brand-black transition"
+        className="fixed bottom-6 right-6 bg-green-500 p-3 rounded-full shadow-lg z-50 hover:bg-green-600 transition"
         title="Chat with us"
         aria-label="Chat with us"
       >
-        {/* WhatsApp SVG icon */}
-        <svg width="24" height="24" fill="currentColor" className="text-white">
-          <path d="M20 2H4a2 2 0 0 0-2 2v16l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/>
+        {/* WhatsApp Icon */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          width="28"
+          height="28"
+          className="text-white"
+        >
+          <path d="M12 .5C5.65.5.5 5.65.5 12c0 2.1.55 4.1 1.6 5.9L.5 23.5l5.8-1.5c1.7 1 3.7 1.6 5.7 1.6 6.35 0 11.5-5.15 11.5-11.5S18.35.5 12 .5zm0 20.7c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.4.9.9-3.3-.2-.4c-1-1.5-1.5-3.2-1.5-5 0-5.1 4.1-9.2 9.2-9.2 2.4 0 4.7.9 6.4 2.6 1.7 1.7 2.6 4 2.6 6.4-.1 5-4.2 9.2-9.2 9.2zm4.9-6.7c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.7.2s-.8.9-1 .9c-.2 0-.4 0-.7-.2-.3-.2-1.1-.4-2-1.4-.7-.8-1.1-1.6-1.3-1.9-.1-.3 0-.4.1-.6.1-.1.3-.4.5-.6.2-.2.2-.3.3-.5.1-.2 0-.4 0-.6s-.7-1.8-1-2.4c-.3-.7-.5-.6-.7-.6h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1-1.1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.5.7.3 1.2.5 1.6.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.3.3-.7.3-1.2.2-1.3z" />
         </svg>
       </a>
 
@@ -64,41 +74,24 @@ export default function Home(){
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
         viewport={{ once: true }}
-        className="relative max-w-6xl mx-auto px-4 pt-24"
+        className="relative max-w-6xl mx-auto px-4 pt-20"
       >
-        <Carousel images={heroes} autoPlay textOverlay={[
-          {heading: "Elevate Your Style", text: "Discover the intersection of tradition and trend."},
-          {heading: "Crafted With Love", text: "Handmade. Handpicked. Just for you."},
-          {heading: "New Season, New Arrivals", text: "Shop the freshest finds in store now."}
-        ]} />
+        <Carousel images={heroes} autoPlay />
       </motion.section>
 
       {/* Category Highlights */}
-      <section className="max-w-6xl mx-auto px-4 mt-10">
-        <h2 className="text-xl md:text-2xl font-bold text-brand-black mb-4">Shop by Category</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {categories.map((cat) => (
-            <Link to={`/category/${cat.label.toLowerCase()}`} key={cat.label}
-              className="group rounded-xl overflow-hidden shadow hover:scale-105 transition flex flex-col items-center bg-white"
-            >
-              <img src={cat.img} alt={cat.label}
-                className="h-28 sm:h-32 w-full object-cover transition group-hover:scale-110" />
-              <div className="p-2 w-full text-center font-semibold text-brand-black">{cat.label}</div>
-            </Link>
-          ))}
-        </div>
-      </section>
+      <CategoryCard />
 
       {/* Featured Collection */}
-      <section className="max-w-6xl mx-auto px-6 py-20 bg-gradient-to-b from-white via-beige-light/30 to-white rounded-3xl mt-12 shadow-md">
+      <section className="max-w-6xl mx-auto px-6 py-12 bg-gradient-to-b from-white via-beige-light/30 to-white rounded-3xl mt-8 shadow-md">
         {/* Section Header */}
-        <div className="flex items-center justify-between mb-10">
+        <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-3xl md:text-4xl font-serif text-brand-black tracking-wide">
-              Featured Collection
+            <h2 className="text-3xl md:text-4xl font-serif text-brand-black tracking-wide mb-1">
+              Shop by Category
             </h2>
-            <p className="text-sm md:text-base text-brand-black/60 mt-2">
-              Curated picks loved by our customers
+            <p className="text-sm md:text-base text-brand-black/60">
+              Discover our curated collections designed to inspire and delight
             </p>
           </div>
           <Link
@@ -114,7 +107,7 @@ export default function Home(){
           layout
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10"
         >
-          {products.slice(0, 6).map((p, i) => (
+          {products.slice(0, 8).map((p, i) => (
             <motion.div
               key={p.id}
               initial={{ opacity: 0, y: 30 }}
@@ -128,7 +121,7 @@ export default function Home(){
         </motion.div>
 
         {/* Trust badges below grid */}
-        <div className="flex flex-wrap justify-center gap-10 mt-12">
+        <div className="flex flex-wrap justify-center gap-10 mt-10">
           <div className="flex items-center gap-2 text-beige-dark font-semibold">
             <ShieldCheck className="w-6 h-6" />
             Secure Payments
@@ -142,13 +135,26 @@ export default function Home(){
             Hassle-free Returns
           </div>
         </div>
-        <div className="mt-12 flex justify-center">
+        <div className="mt-10 flex justify-center">
           <div className="h-0.5 w-40 bg-gradient-to-r from-beige-dark/20 via-beige-dark to-beige-dark/20 rounded-full" />
         </div>
       </section>
 
+
       {/* Shop The Look */}
       <SocialMedia />
+
+      <div className="flex justify-center mt-8">
+        <a
+          href="https://www.instagram.com/nodima_designer?igsh=ajYwcWw1NWYxNzRy"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-beige text-black px-6 py-3 rounded-md font-semibold shadow-md hover:bg-beige-dark transition-colors flex items-center gap-2"
+        >
+          <Instagram size={20} />
+          <span>Follow Us On @nodima_boutique</span>
+        </a>
+      </div>
 
       {/* Stats + Testimonials */}
       <motion.section
@@ -205,7 +211,7 @@ export default function Home(){
           {/* Section Heading */}
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-3xl font-bold text-brand-black">
-              Why choose <span className="text-beige-dark">Pehnaava</span>
+              Why choose <span className="text-beige-dark">Nodima</span>
             </h2>
             <p className="text-brand-black/60 mt-2 text-sm md:text-base max-w-2xl mx-auto">
               We bring together tradition, craftsmanship, and modern elegance to give you an experience like no other.
@@ -245,7 +251,7 @@ export default function Home(){
       </motion.section>
 
       {/* Newsletter Signup */}
-      <motion.section
+      {/* <motion.section
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
@@ -268,7 +274,7 @@ export default function Home(){
             Subscribe
           </button>
         </form>
-      </motion.section>
+      </motion.section> */}
     </div>
   );
 }

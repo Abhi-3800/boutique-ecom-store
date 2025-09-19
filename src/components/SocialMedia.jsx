@@ -12,16 +12,16 @@ const instagramMedia = [
     id: 1,
     type: "post",
     // random fashion image
-    media: "https://picsum.photos/400/400?random=1",
-    url: "https://www.instagram.com/p/DMky3kdymoI/",
+    media: "https://picsum.photos/400/400?random=8",
+    url: "https://www.instagram.com/p/DNlKu3xhQCY/",
   },
   {
     id: 2,
     type: "reel",
     // sample video that always works
     media: "https://sample-videos.com/video123/mp4/480/big_buck_bunny.mp4",
-    poster: "https://picsum.photos/400/400?random=2",
-    url: "https://www.instagram.com/reel/DM-ZyxfgLMa/",
+    poster: "https://jkcdtllpbpzlndunyjna.supabase.co/storage/v1/object/sign/Products/hero2.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8zMWJjMDViMi1jMTkwLTQ0OTEtYjliNy02NmE3MzY4Yzk3ODIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJQcm9kdWN0cy9oZXJvMi5qcGVnIiwiaWF0IjoxNzU3MjYwMzMwLCJleHAiOjE3ODg3OTYzMzB9.ArAtKQ8tnqAxFs07fZE4IrBQjpTTFOrlbM1ea5gSdeY",
+    url: "https://www.instagram.com/p/DNlKu3xhQCY/",
   },
   {
     id: 3,
@@ -45,7 +45,7 @@ const instagramMedia = [
   {
     id: 6,
     type: "post",
-    media: "https://picsum.photos/400/400?random=7",
+    media: "https://picsum.photos/400/400?random=10",
     url: "https://www.instagram.com/p/DMky3kdymoI/",
   },
 ];
