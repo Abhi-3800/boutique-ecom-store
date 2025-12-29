@@ -6,34 +6,35 @@ import { Play, ExternalLink } from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { ins } from "framer-motion/client";
 
 const instagramMedia = [
   {
     id: 1,
     image:
-      "https://jkcdtllpbpzlndunyjna.supabase.co/storage/v1/object/public/Products/hank1.jpg",
-    instagramUrl: "https://www.instagram.com/p/DNlKu3xhQCY/",
+      "https://jkcdtllpbpzlndunyjna.supabase.co/storage/v1/object/sign/Products/hank3.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8zMWJjMDViMi1jMTkwLTQ0OTEtYjliNy02NmE3MzY4Yzk3ODIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJQcm9kdWN0cy9oYW5rMy5qcGciLCJpYXQiOjE3NjcwMTU0ODgsImV4cCI6MTgzMDA4NzQ4OH0.3vzWEpvTEHmq_CoxEABjfvotdJ6n9-V_yAKsCMkKloI",
+    instagramUrl: "https://www.instagram.com/reel/DNlQ5DEhhIU/?igsh=MTVwdzk2dzR1eXRodQ==",
     isReel: false,
   },
   {
     id: 2,
     image:
-      "https://jkcdtllpbpzlndunyjna.supabase.co/storage/v1/object/public/Products/hank2.jpg",
-    instagramUrl: "https://www.instagram.com/reel/DNlQ5DEhhIU/",
+      "https://jkcdtllpbpzlndunyjna.supabase.co/storage/v1/object/sign/Products/baby1.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8zMWJjMDViMi1jMTkwLTQ0OTEtYjliNy02NmE3MzY4Yzk3ODIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJQcm9kdWN0cy9iYWJ5MS5qcGciLCJpYXQiOjE3NjcwMTQ5NjksImV4cCI6MTgyOTY1NDk2OX0.VkBCeqPCIboXG080Msyv4GR5-5qddWtt8FRg0850Iyw",
+    instagramUrl: "https://www.instagram.com/reel/DNlQ5DEhhIU/?igsh=MTVwdzk2dzR1eXRodQ==",
     isReel: true,
   },
   {
     id: 3,
     image:
-      "https://jkcdtllpbpzlndunyjna.supabase.co/storage/v1/object/public/Products/hank3.jpg",
-    instagramUrl: "https://www.instagram.com/p/DMky3kdymoI/",
-    isReel: false,
+      "https://jkcdtllpbpzlndunyjna.supabase.co/storage/v1/object/sign/Products/hair1.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8zMWJjMDViMi1jMTkwLTQ0OTEtYjliNy02NmE3MzY4Yzk3ODIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJQcm9kdWN0cy9oYWlyMS5qcGciLCJpYXQiOjE3NTcyNjAzMDIsImV4cCI6MTc4ODc5NjMwMn0.obLNpGdVerzjhtQ9A0aOZH_x9uzGn7_GYIq5EQq0dvA",
+    instagramUrl: "https://www.instagram.com/p/Cu1jX4xLZpM/?igsh=MTVwdzk2dzR1eXRodQ==",    
+      isReel: false,
   },
   {
     id: 4,
     image:
-      "https://jkcdtllpbpzlndunyjna.supabase.co/storage/v1/object/public/Products/hank3.jpg",
-    instagramUrl: "https://www.instagram.com/p/DMky3kdymoI/",
+      "https://jkcdtllpbpzlndunyjna.supabase.co/storage/v1/object/sign/Products/baby3.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8zMWJjMDViMi1jMTkwLTQ0OTEtYjliNy02NmE3MzY4Yzk3ODIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJQcm9kdWN0cy9iYWJ5My5qcGciLCJpYXQiOjE3NjcwMTQ5OTYsImV4cCI6MTgyOTY1NDk5Nn0.p3EI9e1TLWEMVXmsGOXoqiguAtpi1eJak4ahp72xk6E",
+    instagramUrl: "https://www.instagram.com/reel/DNlQ5DEhhIU/?igsh=MTVwdzk2dzR1eXRodQ==",
     isReel: false,
   }
 ];
