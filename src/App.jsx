@@ -13,7 +13,7 @@ import Signup from './pages/Signup'
 import Returns from './pages/Returns.jsx'
 import AdminDashboard from './pages/AdminDashboard'
 import ProtectedRoute from './routes/ProtectedRoute'
-import ScrollToTop from './components/ScrollToTop';
+import ScrollToTop from './components/ScrollToTop'
 
 
 export default function App() {

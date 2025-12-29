@@ -22,15 +22,10 @@ import dress2 from "../assets/hero3.jpeg";
 
 export const categories = [
   { id: 'stitched-suits', name: 'Stitched Suits' },
-  { id: 'unstitched-suits', name: 'Unstitched Suits' },
-  { id: 'coord-sets', name: 'Coord Sets' },
-  { id: 'dupattas', name: 'Dupattas' },
-  { id: 'customized-handkerchief ', name: 'Customized Handkerchief' },
-  { id: 'handcrafted-items ', name: 'Handcrafted Items ' },
-  { id: 'bottoms', name: 'Bottoms (Salwars and plaazo)' },
-  {id: 'hair-accessories', name: 'Hair Accessories'},
-  {id: 'customized-parandis', name: 'Customized Parandis'},
-  { id: 'kids', name: 'Kids' }
+  { id: 'baby-memory-blankets', name: 'Baby Memory Blankets' },
+  { id: 'dupattas', name: 'Phulkari Dupatta' },
+  { id: 'customized-handkerchief ', name: 'Signature Handkerchief' },
+  {id: 'customized-parandis', name: 'Punjabi Parandi'}
 ]
 
 export const products = [

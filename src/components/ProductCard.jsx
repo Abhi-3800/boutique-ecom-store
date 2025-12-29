@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Star, Heart } from "lucide-react";
+import { supabase } from "../services/supabase";
 
 export default function ProductCard({ product }) {
   const [hovered, setHovered] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
-  const timerRef = React.useRef(null);
+  const timerRef = useRef(null);
   const navigate = useNavigate();
 
   const images = product.images || [];
 
-  // Clear timer
+  /* ---------------- Carousel Timer ---------------- */
   const clearTimer = () => {
     if (timerRef.current) {
       clearInterval(timerRef.current);
@@ -18,7 +19,6 @@ export default function ProductCard({ product }) {
     }
   };
 
-  // Carousel on hover
   useEffect(() => {
     if (hovered && images.length > 1) {
       timerRef.current = setInterval(() => {
@@ -30,6 +30,57 @@ export default function ProductCard({ product }) {
     }
     return () => clearTimer();
   }, [hovered, images.length]);
+
+  /* ---------------- Wishlist Logic ---------------- */
+  const handleWishlistClick = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
+    // Check if already wishlisted
+    const { data: existing, error: checkError } = await supabase
+      .from("wishlists")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("product_id", Number(product.id))
+      .maybeSingle();
+
+    if (checkError) {
+      console.error("Wishlist check error:", checkError);
+      return;
+    }
+
+    // If exists → remove
+    if (existing) {
+      const { error: deleteError } = await supabase
+        .from("wishlists")
+        .delete()
+        .eq("id", existing.id);
+
+      if (deleteError) {
+        console.error("Wishlist remove error:", deleteError);
+      }
+      return;
+    }
+
+    // Else → add
+    const { error: insertError } = await supabase.from("wishlists").insert({
+      user_id: user.id,
+      product_id: Number(product.id),
+    });
+
+    if (insertError) {
+      console.error("Wishlist insert error:", insertError);
+    }
+  };
 
   const isColorVariant = product.variantType === "color";
   const swatches = isColorVariant ? product.variants : null;
@@ -46,14 +97,20 @@ export default function ProductCard({ product }) {
             New
           </div>
         )}
+
         {product.isSale && (
           <div className="absolute top-3 right-3 bg-[#ff5555] text-white px-2 py-0.5 rounded text-xs font-bold z-10">
             Sale
           </div>
         )}
 
+        {/* Image Carousel */}
         <div className="relative overflow-hidden rounded-lg shadow-md aspect-[4/3]">
-          <button className="absolute top-3 right-3 z-30 bg-white rounded-full p-2 shadow-md hover:bg-[#f8f5f2] transition">
+          {/* Wishlist Button */}
+          <button
+            onClick={handleWishlistClick}
+            className="absolute top-3 right-3 z-30 bg-white rounded-full p-2 shadow-md hover:bg-[#f8f5f2] transition"
+          >
             <Heart className="w-5 h-5 text-[#b49b7f]" />
           </button>
 
@@ -71,13 +128,18 @@ export default function ProductCard({ product }) {
         </div>
       </Link>
 
+      {/* Card Content */}
       <div className="bg-white rounded-lg shadow-md px-3 pb-3 flex flex-col w-full mx-auto -mt-5 z-20 relative max-w-full sm:max-w-xs">
-        <h3 className="text-base font-semibold my-2 truncate">{product.title}</h3>
+        <h3 className="text-base font-semibold my-2 truncate">
+          {product.title}
+        </h3>
 
         <div className="flex gap-1 items-center text-[#b49b7f] text-xs mb-1">
           <Star className="w-4 h-4 fill-[#eacb9c]" />
           <span>{product.rating ?? "4.7"}</span>
-          <span className="text-gray-400">({product.numReviews ?? 28})</span>
+          <span className="text-gray-400">
+            ({product.numReviews ?? 28})
+          </span>
         </div>
 
         <p className="text-gray-600 text-xs mb-1 line-clamp-2 min-h-[2.5em]">
@@ -85,17 +147,19 @@ export default function ProductCard({ product }) {
         </p>
 
         <div className="flex items-center justify-between mt-auto">
-          <span className="text-[#b49b7f] font-bold text-lg">₹{product.price}</span>
+          <span className="text-[#b49b7f] font-bold text-lg">
+            ₹{product.price}
+          </span>
 
           {swatches ? (
             <div className="flex gap-1">
               {swatches.slice(0, 4).map((clr) => (
                 <span
                   key={clr}
-                  className="w-5 h-5 rounded-full border border-[#ece1d0] inline-block"
+                  className="w-5 h-5 rounded-full border border-[#ece1d0]"
                   style={{ background: clr }}
                   title={clr}
-                ></span>
+                />
               ))}
               {swatches.length > 4 && (
                 <span className="ml-1 text-xs text-gray-500">

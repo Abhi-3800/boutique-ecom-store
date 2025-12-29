@@ -2,23 +2,23 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Instagram } from 'react-feather';
 import React, { useState, useEffect } from 'react';
-import banner2 from "../assets/hero2.jpeg";
-import banner3 from "../assets/hero3.jpeg";
-import cushion1 from "../assets/cushion1.jpg";
-import cushion2 from "../assets/cushion2.jpg";
-import cushion3 from "../assets/cushion3.jpg";
-import hair1 from "../assets/hair1.jpg";
-import hair2 from "../assets/hair2.jpg";
-import hair3 from "../assets/hair3.jpg";
-import hair4 from "../assets/hair4.jpg";
-import dress1 from "../assets/hero2.jpeg";
+import baby1 from "../assets/baby1.jpg";
+import baby2 from "../assets/baby2.jpg";
+import suit1 from "../assets/suit1.jpg";
+import suit2 from "../assets/suit2.jpg";
+import shawl1 from "../assets/shawl1.jpg";
+import shawl2 from "../assets/shawl2.jpg";
+import hank1 from "../assets/hank1.jpg";
+import hank2 from "../assets/hank2.jpg";
+import hank3 from "../assets/hank3.jpg";
+
 
 const CategoryCard = () => {
     const categories = [
-      { label: "Stitched Suits", images: [banner3, banner2], count: "120+ items", trending: true },
-      { label: "Home & Garden", images: [cushion1, cushion2, cushion3], count: "80+ items", trending: false },
-      { label: "Dupattas", images: [dress1, banner3], count: "150+ items", trending: true },
-      { label: "Customized Parandis", images: [hair1, hair2, hair3, hair4], count: "60+ items", trending: false }
+      { label: "Customized Suits", images: [suit1, suit2], count: "80+ items", trending: false },
+      { label: "Baby Memory Blankets", images: [baby2, baby1], count: "20+ items", trending: true },
+      { label: "Signature Handkerchief", images: [hank3, hank2, hank1], count: "60+ items", trending: false },
+      { label: "Embroidered Dupattas", images: [shawl1, shawl2], count: "150+ items", trending: true }
     ];
 
   const [hoveredCard, setHoveredCard] = useState(null);

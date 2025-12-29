@@ -1,53 +1,41 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { Play } from "lucide-react";
+import { Play, ExternalLink } from "lucide-react";
+
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-// ✅ Development dummy data
 const instagramMedia = [
   {
     id: 1,
-    type: "post",
-    // random fashion image
-    media: "https://picsum.photos/400/400?random=8",
-    url: "https://www.instagram.com/p/DNlKu3xhQCY/",
+    image:
+      "https://jkcdtllpbpzlndunyjna.supabase.co/storage/v1/object/public/Products/hank1.jpg",
+    instagramUrl: "https://www.instagram.com/p/DNlKu3xhQCY/",
+    isReel: false,
   },
   {
     id: 2,
-    type: "reel",
-    // sample video that always works
-    media: "https://sample-videos.com/video123/mp4/480/big_buck_bunny.mp4",
-    poster: "https://jkcdtllpbpzlndunyjna.supabase.co/storage/v1/object/sign/Products/hero2.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8zMWJjMDViMi1jMTkwLTQ0OTEtYjliNy02NmE3MzY4Yzk3ODIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJQcm9kdWN0cy9oZXJvMi5qcGVnIiwiaWF0IjoxNzU3MjYwMzMwLCJleHAiOjE3ODg3OTYzMzB9.ArAtKQ8tnqAxFs07fZE4IrBQjpTTFOrlbM1ea5gSdeY",
-    url: "https://www.instagram.com/p/DNlKu3xhQCY/",
+    image:
+      "https://jkcdtllpbpzlndunyjna.supabase.co/storage/v1/object/public/Products/hank2.jpg",
+    instagramUrl: "https://www.instagram.com/reel/DNlQ5DEhhIU/",
+    isReel: true,
   },
   {
     id: 3,
-    type: "post",
-    media: "https://picsum.photos/400/400?random=3",
-    url: "https://www.instagram.com/p/DMky3kdymoI/",
+    image:
+      "https://jkcdtllpbpzlndunyjna.supabase.co/storage/v1/object/public/Products/hank3.jpg",
+    instagramUrl: "https://www.instagram.com/p/DMky3kdymoI/",
+    isReel: false,
   },
   {
     id: 4,
-    type: "post",
-    media: "https://picsum.photos/400/400?random=4",
-    url: "https://www.instagram.com/p/DMky3kdymoI/",
-  },
-  {
-    id: 5,
-    type: "reel",
-    media: "https://sample-videos.com/video123/mp4/480/big_buck_bunny.mp4",
-    poster: "https://picsum.photos/400/400?random=5",
-    url: "https://www.instagram.com/reel/DM-ZyxfgLMa/",
-  },
-  {
-    id: 6,
-    type: "post",
-    media: "https://picsum.photos/400/400?random=10",
-    url: "https://www.instagram.com/p/DMky3kdymoI/",
-  },
+    image:
+      "https://jkcdtllpbpzlndunyjna.supabase.co/storage/v1/object/public/Products/hank3.jpg",
+    instagramUrl: "https://www.instagram.com/p/DMky3kdymoI/",
+    isReel: false,
+  }
 ];
 
 export default function InstagramCarousel() {
@@ -61,50 +49,56 @@ export default function InstagramCarousel() {
         modules={[Navigation, Pagination, Autoplay]}
         slidesPerView={1}
         spaceBetween={16}
-        loop={true}
+        loop
         navigation
         pagination={{ clickable: true }}
-        autoplay={{ delay: 4000, disableOnInteraction: false }}
+        autoplay={{ delay: 3500, disableOnInteraction: false }}
         breakpoints={{
           640: { slidesPerView: 2, spaceBetween: 20 },
           768: { slidesPerView: 3, spaceBetween: 24 },
           1024: { slidesPerView: 4, spaceBetween: 30 },
         }}
-        className="group"
       >
-        {instagramMedia.map(({ id, type, media, poster, url }) => (
+        {instagramMedia.map(({ id, image, instagramUrl, isReel }) => (
           <SwiperSlide key={id}>
             <a
-              href={url}
+              href={instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative block rounded-lg overflow-hidden shadow-md cursor-pointer group"
+              className="relative block rounded-xl overflow-hidden shadow-md group"
             >
-              {type === "post" && (
-                <img
-                  src={media}
-                  alt={`Instagram post ${id}`}
-                  className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
-                  loading="lazy"
-                />
+              {/* Image */}
+              <img
+                src={image}
+                alt="Instagram look"
+                className="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105"
+                loading="lazy"
+              />
+
+              {/* Reel indicator */}
+              {isReel && (
+                <div className="absolute top-3 right-3 bg-black/70 rounded-full p-2">
+                  <Play className="w-4 h-4 text-white" />
+                </div>
               )}
 
-              {type === "reel" && (
-                <>
-                  <video
-                    src={media}
-                    poster={poster}
-                    className="w-full h-56 object-cover"
-                    muted
-                    loop
-                    playsInline
-                    autoPlay
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-25 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Play className="w-10 h-10 text-white" />
-                  </div>
-                </>
-              )}
+              {/* Hover Overlay */}
+              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-center px-4">
+                
+                {/* Shop This Look Button */}
+                <button
+                  type="button"
+                  className="bg-white text-black px-5 py-2 rounded-full font-semibold text-sm hover:bg-beige-dark hover:text-white transition"
+                >
+                  Shop this look
+                </button>
+
+                {/* View on Instagram */}
+                <div className="flex items-center gap-1 mt-3 text-white text-sm opacity-90">
+                  <ExternalLink className="w-4 h-4" />
+                  <span>View on Instagram</span>
+                </div>
+              </div>
             </a>
           </SwiperSlide>
         ))}
