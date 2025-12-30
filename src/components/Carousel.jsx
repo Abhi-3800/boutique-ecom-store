@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 export default function Carousel({ images = [], overlayText }) {
   return (
@@ -31,9 +32,12 @@ export default function Carousel({ images = [], overlayText }) {
         <p className="mt-3 text-lg max-w-2xl drop-shadow">
           Discover handcrafted suits, palazzos & boutique pieces.
         </p>
-        <button className="mt-6 px-6 py-3 bg-white text-black rounded-full font-semibold shadow-md hover:bg-gray-100 transition">
+        <Link
+          to="/collection"
+          className="mt-6 inline-block px-6 py-3 bg-white text-black rounded-full font-semibold shadow-md hover:bg-gray-100 transition"
+        >
           Explore Collection
-        </button>
+        </Link>
       </div>
     </div>
   )

@@ -15,7 +15,6 @@ import hank3 from "../assets/hank3.jpg";
 
 const CategoryCard = () => {
     const categories = [
-      { label: "Customized Suits", images: [suit1, suit2], count: "80+ items", trending: false },
       { label: "Baby Memory Blankets", images: [baby2, baby1], count: "20+ items", trending: true },
       { label: "Signature Handkerchief", images: [hank3, hank2, hank1], count: "60+ items", trending: false },
       { label: "Embroidered Dupattas", images: [shawl1, shawl2], count: "150+ items", trending: true }

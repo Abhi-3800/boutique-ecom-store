@@ -21,7 +21,7 @@ import dress1 from "../assets/hero2.jpeg";
 import dress2 from "../assets/hero3.jpeg";
 
 export const categories = [
-  { id: 'stitched-suits', name: 'Stitched Suits' },
+  { id: 'stitched-suits', name: 'Exclusive Custom Suits' },
   { id: 'baby-memory-blankets', name: 'Baby Memory Blankets' },
   { id: 'dupattas', name: 'Phulkari Dupatta' },
   { id: 'customized-handkerchief ', name: 'Signature Handkerchief' },
