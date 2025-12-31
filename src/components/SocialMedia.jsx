@@ -26,9 +26,9 @@ const instagramMedia = [
   {
     id: 3,
     image:
-      "https://jkcdtllpbpzlndunyjna.supabase.co/storage/v1/object/sign/Products/hair1.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8zMWJjMDViMi1jMTkwLTQ0OTEtYjliNy02NmE3MzY4Yzk3ODIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJQcm9kdWN0cy9oYWlyMS5qcGciLCJpYXQiOjE3NTcyNjAzMDIsImV4cCI6MTc4ODc5NjMwMn0.obLNpGdVerzjhtQ9A0aOZH_x9uzGn7_GYIq5EQq0dvA",
-    instagramUrl: "https://www.instagram.com/p/Cu1jX4xLZpM/?igsh=MTVwdzk2dzR1eXRodQ==",    
-      isReel: false,
+      "https://jkcdtllpbpzlndunyjna.supabase.co/storage/v1/object/sign/Products/hair13.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8zMWJjMDViMi1jMTkwLTQ0OTEtYjliNy02NmE3MzY4Yzk3ODIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJQcm9kdWN0cy9oYWlyMTMuanBnIiwiaWF0IjoxNzY3MDgzMjQ0LCJleHAiOjE4MzAxNTUyNDR9.lSJXFwYNb_kJdPwh0kU7YtmiIE_lv-IUBvrbrk12hPE",
+    instagramUrl: "https://www.instagram.com/p/Cu1jX4xLZpM/?igsh=MTVwdzk2dzR1eXRodQ==",
+    isReel: false,
   },
   {
     id: 4,
