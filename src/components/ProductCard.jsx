@@ -45,40 +45,20 @@ export default function ProductCard({ product }) {
       return;
     }
 
-    // Check if already wishlisted
-    const { data: existing, error: checkError } = await supabase
+    const { data: existing } = await supabase
       .from("wishlists")
       .select("id")
       .eq("user_id", user.id)
       .eq("product_id", Number(product.id))
       .maybeSingle();
 
-    if (checkError) {
-      console.error("Wishlist check error:", checkError);
-      return;
-    }
-
-    // If exists → remove
     if (existing) {
-      const { error: deleteError } = await supabase
-        .from("wishlists")
-        .delete()
-        .eq("id", existing.id);
-
-      if (deleteError) {
-        console.error("Wishlist remove error:", deleteError);
-      }
-      return;
-    }
-
-    // Else → add
-    const { error: insertError } = await supabase.from("wishlists").insert({
-      user_id: user.id,
-      product_id: Number(product.id),
-    });
-
-    if (insertError) {
-      console.error("Wishlist insert error:", insertError);
+      await supabase.from("wishlists").delete().eq("id", existing.id);
+    } else {
+      await supabase.from("wishlists").insert({
+        user_id: user.id,
+        product_id: Number(product.id),
+      });
     }
   };
 
@@ -92,21 +72,22 @@ export default function ProductCard({ product }) {
       onMouseLeave={() => setHovered(false)}
     >
       <Link to={`/product/${product.id}`} className="block">
+        {/* Badges */}
         {product.isNew && (
-          <div className="absolute top-3 left-3 bg-[#b49b7f] text-white px-2 py-0.5 rounded text-xs font-bold z-10">
+          <div className="absolute top-3 left-3 bg-[#b49b7f] text-white px-2 py-0.5 rounded text-xs font-bold z-20">
             New
           </div>
         )}
 
         {product.isSale && (
-          <div className="absolute top-3 right-3 bg-[#ff5555] text-white px-2 py-0.5 rounded text-xs font-bold z-10">
+          <div className="absolute top-3 right-3 bg-[#ff5555] text-white px-2 py-0.5 rounded text-xs font-bold z-20">
             Sale
           </div>
         )}
 
-        {/* Image Carousel */}
-        <div className="relative overflow-hidden rounded-lg shadow-md aspect-[4/3]">
-          {/* Wishlist Button */}
+        {/* IMAGE (BLUR FILL + CONTAIN) */}
+        <div className="relative h-[220px] rounded-lg overflow-hidden bg-[#f3efe9] shadow-md">
+          {/* Wishlist */}
           <button
             onClick={handleWishlistClick}
             className="absolute top-3 right-3 z-30 bg-white rounded-full p-2 shadow-md hover:bg-[#f8f5f2] transition"
@@ -115,20 +96,31 @@ export default function ProductCard({ product }) {
           </button>
 
           {images.slice(0, 3).map((img, idx) => (
-            <img
-              key={idx}
-              src={img}
-              alt={`${product.title} image ${idx + 1}`}
-              className={`w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-1000 ${
-                idx === activeImage ? "opacity-100 z-10" : "opacity-0 z-0"
-              } ${hovered ? "scale-110" : "scale-100"}`}
-              loading="lazy"
-            />
+            <React.Fragment key={idx}>
+              {/* Blurred background */}
+              <img
+                src={img}
+                alt=""
+                className={`absolute inset-0 w-full h-full object-cover blur-xl scale-110 transition-opacity duration-700 ${
+                  idx === activeImage ? "opacity-100" : "opacity-0"
+                }`}
+              />
+
+              {/* Main image */}
+              <img
+                src={img}
+                alt={`${product.title} ${idx + 1}`}
+                className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-700 z-10 ${
+                  idx === activeImage ? "opacity-100" : "opacity-0"
+                }`}
+                loading="lazy"
+              />
+            </React.Fragment>
           ))}
         </div>
       </Link>
 
-      {/* Card Content */}
+      {/* CARD CONTENT */}
       <div className="bg-white rounded-lg shadow-md px-3 pb-3 flex flex-col w-full mx-auto -mt-5 z-20 relative max-w-full sm:max-w-xs">
         <h3 className="text-base font-semibold my-2 truncate">
           {product.title}
@@ -158,7 +150,6 @@ export default function ProductCard({ product }) {
                   key={clr}
                   className="w-5 h-5 rounded-full border border-[#ece1d0]"
                   style={{ background: clr }}
-                  title={clr}
                 />
               ))}
               {swatches.length > 4 && (

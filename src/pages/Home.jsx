@@ -45,20 +45,37 @@ export default function Home() {
         href="https://wa.me/9814687469"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 bg-green-500 p-3 rounded-full shadow-lg z-50 hover:bg-green-600 transition"
-        aria-label="Chat with us"
+        className="fixed bottom-6 right-6 bg-[#25D366] p-4 rounded-full shadow-lg z-50
+                  hover:scale-110 transition-transform"
+        aria-label="Chat on WhatsApp"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 24 24"
-          width="28"
-          height="28"
-          className="text-white"
+          viewBox="0 0 32 32"
+          width="30"
+          height="30"
+          fill="white"
         >
-          <path d="M12 .5C5.65.5.5 5.65.5 12c0 2.1.55 4.1 1.6 5.9L.5 23.5l5.8-1.5c1.7 1 3.7 1.6 5.7 1.6 6.35 0 11.5-5.15 11.5-11.5S18.35.5 12 .5z" />
+          <path d="M16.04 2.01c-7.73 0-14.03 6.3-14.03 14.04
+            0 2.48.65 4.91 1.88 7.05L2 30l7.07-1.86a14
+            14 0 0 0 6.97 1.78h.01c7.74 0 14.04-6.3
+            14.04-14.04S23.78 2.01 16.04 2.01zm8.19
+            19.29c-.34.96-1.99 1.84-2.8 1.98-.77.14
+            -1.75.2-2.83-.18-.66-.21-1.5-.49-2.59-1
+            -4.55-1.97-7.52-6.6-7.75-6.9-.23-.3-1.85-2.46
+            -1.85-4.69s1.16-3.33 1.57-3.79c.41-.46.9-.58
+            1.2-.58.3 0 .6 0 .86.01.28.01.65-.1
+            .99.76.34.86 1.17 2.97 1.27 3.18.1.21.17
+            .45.03.72-.14.27-.21.45-.41.69-.2.24-.42
+            .54-.6.73-.2.2-.4.42-.17.82.23.4 1.03
+            1.7 2.21 2.76 1.52 1.36 2.8 1.78 3.2
+            1.98.4.2.63.17.86-.1.23-.27 1-1.17
+            1.27-1.57.27-.4.54-.34.91-.2.37.14
+            2.35 1.11 2.75 1.31.4.2.67.3.77.47
+            .1.17.1.96-.24 1.92z"/>
         </svg>
       </a>
+
 
       {/* Hero */}
       <motion.section
@@ -117,7 +134,7 @@ export default function Home() {
             <ShieldCheck /> Secure Payments
           </div>
           <div className="flex items-center gap-2 font-semibold">
-            <CreditCard /> Cash on Delivery
+            <CreditCard /> Multiple Payment Options
           </div>
           <div className="flex items-center gap-2 font-semibold">
             <Gift /> Hassle-free Returns

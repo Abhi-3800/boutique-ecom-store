@@ -91,7 +91,7 @@ export default function InstagramCarousel() {
                   type="button"
                   className="bg-white text-black px-5 py-2 rounded-full font-semibold text-sm hover:bg-beige-dark hover:text-white transition"
                 >
-                  Shop this look
+                  Shop this product
                 </button>
 
                 {/* View on Instagram */}
