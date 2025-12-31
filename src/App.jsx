@@ -11,8 +11,6 @@ import Wishlist from './pages/Wishlist'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Returns from './pages/Returns.jsx'
-import AdminDashboard from './pages/AdminDashboard'
-import ProtectedRoute from './routes/ProtectedRoute'
 import ScrollToTop from './components/ScrollToTop'
 
 
@@ -33,9 +31,6 @@ export default function App() {
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route element={<ProtectedRoute />}>
-            <Route path="/admin" element={<AdminDashboard />} />
-          </Route>
         </Routes>
       </main>
       <Footer />

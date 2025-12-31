@@ -13,7 +13,6 @@ export default function Collection() {
   const visibleCategories = categories.slice(0, 6)
   const moreCategories = categories.slice(2)
 
-  // Fetch products from Supabase (or use fake data as fallback)
   const [products, setProducts] = React.useState([]);
   
   React.useEffect(() => {

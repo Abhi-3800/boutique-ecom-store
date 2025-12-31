@@ -4,10 +4,13 @@ import { Instagram } from 'react-feather';
 import React, { useState, useEffect } from 'react';
 import baby1 from "../assets/baby1.jpg";
 import baby2 from "../assets/baby2.jpg";
-import suit1 from "../assets/suit1.jpg";
-import suit2 from "../assets/suit2.jpg";
-import shawl1 from "../assets/shawl1.jpg";
-import shawl2 from "../assets/shawl2.jpg";
+import baby3 from "../assets/baby3.jpg";
+import hair1 from "../assets/hair7.jpg";
+import hair2 from "../assets/hair9.jpg";
+import hair3 from "../assets/hair4.jpg";
+import shawl1 from "../assets/dupatta12.jpeg";
+import shawl2 from "../assets/dupatta9.2.jpeg";
+import shawl3 from "../assets/dupatta11.2.jpeg";
 import hank1 from "../assets/hank1.jpg";
 import hank2 from "../assets/hank2.jpg";
 import hank3 from "../assets/hank3.jpg";
@@ -15,9 +18,10 @@ import hank3 from "../assets/hank3.jpg";
 
 const CategoryCard = () => {
     const categories = [
-      { label: "Baby Memory Blankets", images: [baby2, baby1], count: "20+ items", trending: true },
+      { label: "Baby Memory Blankets", images: [baby2, baby1, baby3], count: "20+ items", trending: true },
       { label: "Signature Handkerchief", images: [hank3, hank2, hank1], count: "60+ items", trending: false },
-      { label: "Embroidered Dupattas", images: [shawl1, shawl2], count: "150+ items", trending: true }
+      { label: "Embroidered Dupattas", images: [shawl1, shawl2, shawl3], count: "150+ items", trending: true },
+      { label: "Handmade Customized Parandis", images: [hair1, hair2, hair3], count: "150+ items", trending: true }
     ];
 
   const [hoveredCard, setHoveredCard] = useState(null);

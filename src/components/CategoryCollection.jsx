@@ -1,10 +1,28 @@
 // src/pages/CategoryCollection.jsx
 import { useParams } from "react-router-dom";
-import { products, categories } from "../utils/fakeData";
+import { categories } from "../utils/fakeData";
 import { Link } from "react-router-dom";
 
 export default function CategoryCollection() {
-  const { id } = useParams(); // this will be "dresses", "rakhis", etc.
+  const { id } = useParams();
+  const [products, setProducts] = React.useState([]);
+    
+    React.useEffect(() => {
+      const fetchProducts = async () => {
+        const { data, error } = await supabase
+          .from('products')
+          .select('*');
+        console.log(data)
+        if (error) {
+          console.error("Error fetching products:", error);
+  
+        } else {
+          setProducts(data);
+        }
+      };
+      fetchProducts();
+    }, []);
+
   const category = categories.find(c => c.id === id);
   const filteredProducts = products.filter(p => p.category === id);
 

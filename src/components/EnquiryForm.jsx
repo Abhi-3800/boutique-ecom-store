@@ -10,7 +10,6 @@ export default function EnquiryForm({ product }) {
     e.preventDefault();
     setSending(true);
     setError('');
-    // Build form data to send to Formspree
     const data = new FormData();
 
     data.append('name', form.name);

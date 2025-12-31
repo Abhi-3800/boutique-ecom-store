@@ -8,7 +8,6 @@ import {
   Star,
   Truck,
   RefreshCcw,
-  Share2,
   Heart,
 } from "lucide-react";
 
@@ -194,16 +193,6 @@ export default function ProductDetail() {
             >
               <Heart className="w-5 h-5" />
               Wishlist
-            </button>
-
-            <button
-              onClick={() =>
-                navigator.clipboard.writeText(window.location.href)
-              }
-              className="px-4 py-2 border-2 border-[#ece1d0] rounded flex gap-2 text-[#b49b7f]"
-            >
-              <Share2 className="w-5 h-5" />
-              Share
             </button>
           </div>
 
