@@ -1,5 +1,6 @@
 import { Phone, Mail, MapPin } from "lucide-react"
 import { FaInstagram, FaFacebook, FaPinterest } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -19,12 +20,29 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold text-brand-black mb-3">Quick Links</h3>
           <ul className="space-y-2 text-gray-600">
-            <li><a href="/" className="hover:text-brand-black transition">Home</a></li>
-            <li><a href="/collection" className="hover:text-brand-black transition">Collections</a></li>
-            <li><a href="/about" className="hover:text-brand-black transition">About</a></li>
-            <li><a href="/contact" className="hover:text-brand-black transition">Contact</a></li>
+            <li>
+              <Link to="/" className="hover:text-brand-black transition">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/collection" className="hover:text-brand-black transition">
+                Collections
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="hover:text-brand-black transition">
+                About
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="hover:text-brand-black transition">
+                Contact
+              </Link>
+            </li>
           </ul>
         </div>
+
 
         {/* Contact */}
         <div>
