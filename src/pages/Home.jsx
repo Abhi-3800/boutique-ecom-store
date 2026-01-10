@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -38,6 +39,14 @@ export default function Home() {
   }, []);
 
   return (
+    <>
+    <Helmet>
+      <title>Nodima | Elegance in Every Stitch</title>
+      <meta
+        name="description"
+        content="Explore Nodima Designs premium handcrafted fashion where elegance meets timeless design."
+      />
+    </Helmet>
     <div className="font-sans text-brand-black bg-beige-light pb-1">
 
       {/* Floating WhatsApp */}
@@ -179,5 +188,6 @@ export default function Home() {
         </div>
       </motion.section>
     </div>
+    </>
   );
 }
