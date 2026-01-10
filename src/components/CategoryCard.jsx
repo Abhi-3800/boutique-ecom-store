@@ -143,13 +143,15 @@ const CategoryCard = () => {
 
         {/* Bottom CTA */}
         <div className="text-center mt-12">
-          <a
-            href="/collection"
+          <Link
+            to="/collection"
             className="inline-flex items-center space-x-2 bg-white/70 backdrop-blur-sm px-6 py-3 rounded-full shadow-md border border-stone-200/50 hover:shadow-lg hover:bg-amber-50/70 transition"
           >
-            <span className="text-stone-700 font-semibold text-sm">View All Categories</span>
+            <span className="text-stone-700 font-semibold text-sm">
+              View All Categories
+            </span>
             <ArrowRight className="text-amber-600" size={18} />
-          </a>
+          </Link>
         </div>
       </section>
     </div>
