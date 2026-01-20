@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react"
-import { categories } from "../utils/fakeData"
 import ProductCard from "../components/ProductCard"
 import { motion } from "framer-motion"
 import { supabase } from "../services/supabase"
@@ -14,6 +13,13 @@ export default function Collection() {
   const moreCategories = categories.slice(2)
 
   const [products, setProducts] = React.useState([]);
+  const categories = [
+    { id: 'baby-memory-blankets', name: 'Baby Memory Blankets' },
+    { id: 'dupattas', name: 'Phulkari Dupatta' },
+    { id: 'customized-handkerchief', name: 'Signature Handkerchief' },
+    {id: 'customized-parandis', name: 'Punjabi Parandi'},
+    {id: 'women-palazzo', name: 'Women Palazzo'},
+  ]
   
   React.useEffect(() => {
     const fetchProducts = async () => {
