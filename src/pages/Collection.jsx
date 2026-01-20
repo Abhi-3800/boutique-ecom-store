@@ -8,11 +8,6 @@ export default function Collection() {
   const [query, setQuery] = useState("")
   const [cat, setCat] = useState("all")
 
-  // Split categories for hybrid
-  const visibleCategories = categories.slice(0, 6)
-  const moreCategories = categories.slice(2)
-
-  const [products, setProducts] = React.useState([]);
   const categories = [
     { id: 'baby-memory-blankets', name: 'Baby Memory Blankets' },
     { id: 'dupattas', name: 'Phulkari Dupatta' },
@@ -20,6 +15,11 @@ export default function Collection() {
     {id: 'customized-parandis', name: 'Punjabi Parandi'},
     {id: 'women-palazzo', name: 'Women Palazzo'},
   ]
+  // Split categories for hybrid
+  const visibleCategories = categories.slice(0, 6)
+  const moreCategories = categories.slice(2)
+
+  const [products, setProducts] = React.useState([]);
   
   React.useEffect(() => {
     const fetchProducts = async () => {
