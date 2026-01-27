@@ -308,10 +308,18 @@ function Tabs() {
           </div>
         )}
         {tab === "returns" && (
-          <div className="flex gap-2">
-            <RefreshCcw /> Currently we don't accept returns.
-          </div>
+          <Link
+            to="/returns"
+            className="flex items-center gap-2 text-sm  hover:text-black"
+          >
+            <RefreshCcw className="w-4 h-4 flex-shrink-0" />
+            <span>
+              Currently we don’t accept returns.{" "}
+              <span className="underline">Learn more</span>
+            </span>
+          </Link>
         )}
+
       </div>
     </div>
   );
