@@ -22,7 +22,7 @@ export default function EnquiryForm({ product }) {
     data.append('productTitle', product?.title || '');
 
     try {
-      const response = await fetch('https://formspree.io/f/xanbronl', {
+      const response = await fetch('https://formspree.io/f/xdalnron', {
         method: 'POST',
         body: data,
         headers: { Accept: 'application/json' }
