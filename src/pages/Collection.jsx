@@ -14,6 +14,7 @@ export default function Collection() {
     { id: 'customized-handkerchief', name: 'Signature Handkerchief' },
     {id: 'customized-parandis', name: 'Punjabi Parandi'},
     {id: 'women-palazzo', name: 'Women Palazzo'},
+    {id: 'hairpins', name: 'Hairpins'},
   ]
   // Split categories for hybrid
   const visibleCategories = categories.slice(0, 6)

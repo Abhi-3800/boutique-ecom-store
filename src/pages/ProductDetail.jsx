@@ -2,6 +2,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { supabase } from "../services/supabase";
 import EnquiryForm from "../components/EnquiryForm";
+import toast from "react-hot-toast";
 import {
   ChevronLeft,
   ChevronRight,
@@ -10,10 +11,15 @@ import {
   RefreshCcw,
   Heart,
 } from "lucide-react";
+import { useWishlist } from "../context/WishlistContext";
 
 export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const {
+    toggleWishlist,
+    isWishlisted,
+  } = useWishlist();
 
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
@@ -22,8 +28,8 @@ export default function ProductDetail() {
   const [activeIndex, setActiveIndex] = useState(0);
   const carouselRef = useRef(null);
   const enquiryRef = useRef(null);
-
-  const [wishlistLoading, setWishlistLoading] = useState(false);
+  const [buyOpen, setBuyOpen] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   /* ---------------- FETCH PRODUCT ---------------- */
   useEffect(() => {
@@ -71,12 +77,87 @@ export default function ProductDetail() {
 
     fetchRelated();
   }, [product]);
+  const handleProceedToPayment = async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session) {
+        navigate("/login");
+        return;
+      }
+
+      const { data, error } = await supabase.functions.invoke(
+        "create-razorpay-order",
+        {
+          body: {
+            productId: product.id,
+            quantity,
+          },
+        }
+      );
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      const options = {
+  
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount: data.amount,
+        currency: data.currency,
+        name: "Noor Fashion Hut",
+        order_id: data.orderId,
+
+        handler: async function (response) {
+          try {
+            const { data: verifyData, error: verifyError } =
+              await supabase.functions.invoke("verify-razorpay-payment", {
+                body: {
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature,
+                },
+              });
+
+            console.log("Verification result:", verifyData);
+
+            if (verifyError) {
+              console.error(verifyError);
+              toast.error("Payment verification failed ❌");
+              return;
+            }
+
+            // ✅ Close modal
+            setBuyOpen(false);
+
+            // ✅ Show success toast
+            toast.success("Your order has been placed successfully 🎉");
+
+            // ✅ Redirect after short delay
+            setTimeout(() => {
+              navigate("/orders");
+            }, 1200);
+
+          } catch (err) {
+            console.error(err);
+            toast.error("Something went wrong ❌");
+          }
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   /* -------- WISHLIST -------- */
   const handleWishlistClick = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setWishlistLoading(true);
 
     const {
       data: { user },
@@ -87,23 +168,7 @@ export default function ProductDetail() {
       return;
     }
 
-    const { data: existing } = await supabase
-      .from("wishlists")
-      .select("id")
-      .eq("user_id", user.id)
-      .eq("product_id", Number(product.id))
-      .maybeSingle();
-
-    if (existing) {
-      await supabase.from("wishlists").delete().eq("id", existing.id);
-    } else {
-      await supabase.from("wishlists").insert({
-        user_id: user.id,
-        product_id: Number(product.id),
-      });
-    }
-
-    setWishlistLoading(false);
+    await toggleWishlist(product.id);
   };
 
   const scrollLeft = () =>
@@ -185,14 +250,31 @@ export default function ProductDetail() {
           </div>
           <p className="text-[#7f6f54]">{product.description}</p>
 
-          <div className="flex gap-4 mt-4">
+          <div className="flex gap-4 mt-4 flex-wrap">
+            <button
+              onClick={() => setBuyOpen(true)}
+              className="px-4 py-2 bg-[#b49b7f] text-white rounded flex items-center gap-2 hover:opacity-90 transition"
+            >
+              Buy Now
+            </button>
+
             <button
               onClick={handleWishlistClick}
-              disabled={wishlistLoading}
-              className="px-4 py-2 border-2 border-[#ece1d0] rounded flex gap-2 text-[#b49b7f]"
+              className="px-5 py-2 border rounded-xl flex items-center gap-2 hover:shadow-md transition"
             >
-              <Heart className="w-5 h-5" />
-              Wishlist
+              <Heart
+                className={`w-5 h-5 transition-all duration-300 ${
+                  isWishlisted(product.id)
+                    ? "fill-red-500 text-red-500 scale-110"
+                    : "text-gray-500"
+                }`}
+              />
+
+              <span>
+                {isWishlisted(product.id)
+                  ? "Remove from Wishlist"
+                  : "Add to Wishlist"}
+              </span>
             </button>
           </div>
 
@@ -274,10 +356,100 @@ export default function ProductDetail() {
           </div>
         </div>
       )}
+    <BuyNowModal
+      open={buyOpen}
+      onClose={() => setBuyOpen(false)}
+      product={product}
+      quantity={quantity}
+      setQuantity={setQuantity}
+      onProceed={handleProceedToPayment}
+    />
     </div>
   );
 }
 
+function BuyNowModal({ open, onClose, product, quantity, setQuantity, onProceed }) {
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center">
+
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        onClick={onClose}
+      />
+
+      {/* Modal */}
+      <div
+        className="
+          relative bg-white w-full
+          sm:max-w-md
+          rounded-t-3xl sm:rounded-2xl
+          p-6
+          shadow-2xl
+          animate-[fadeIn_0.2s_ease-out]
+          max-h-[90vh]
+          overflow-y-auto
+        "
+      >
+        <h2 className="text-xl font-bold text-[#b49b7f] mb-4">
+          Buy {product.title}
+        </h2>
+
+        {/* Product Summary */}
+        <div className="flex gap-4 mb-4">
+          <img
+            src={product.images?.[0]}
+            className="w-20 h-20 object-contain border rounded"
+          />
+          <div>
+            <p className="font-semibold">{product.title}</p>
+            <p className="text-[#b49b7f] font-bold">
+              ₹{product.price}
+            </p>
+          </div>
+        </div>
+
+        {/* Quantity */}
+        <div className="flex items-center gap-4 mb-6">
+          <button
+            onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+            className="w-9 h-9 border rounded-full flex items-center justify-center"
+          >
+            −
+          </button>
+
+          <span className="font-semibold text-lg">
+            {quantity}
+          </span>
+
+          <button
+            onClick={() => setQuantity((q) => q + 1)}
+            className="w-9 h-9 border rounded-full flex items-center justify-center"
+          >
+            +
+          </button>
+        </div>
+
+        {/* CTA */}
+        <button
+          onClick={onProceed}
+          className="w-full py-3 rounded-xl bg-[#b49b7f] text-white font-semibold hover:opacity-90 transition"
+        >
+          Proceed to Payment
+        </button>
+
+        <button
+          onClick={onClose}
+          className="mt-3 w-full text-sm text-gray-500 hover:text-black"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  );
+}
 /* ---------------- TABS ---------------- */
 function Tabs() {
   const [tab, setTab] = useState("details");
@@ -301,7 +473,7 @@ function Tabs() {
       </div>
 
       <div className="mt-4 text-[#7f6f54]">
-        {tab === "details" && <p>Finest fabrics and craftsmanship.</p>}
+        {tab === "details" && <p>Finest fabrics and craftsmanship. Customization also available.</p>}
         {tab === "shipping" && (
           <div className="flex gap-2">
             <Truck /> Delivered in 3–6 working days.

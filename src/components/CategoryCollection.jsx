@@ -10,6 +10,7 @@ export default function CategoryCollection() {
     { id: 'customized-handkerchief', name: 'Signature Handkerchief' },
     {id: 'customized-parandis', name: 'Punjabi Parandi'},
     {id: 'women-palazzo', name: 'Women Palazzo'},
+    {id: 'hairpins', name: 'Hairpins'},
   ]
   const [products, setProducts] = React.useState([]);
     
