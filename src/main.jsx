@@ -6,6 +6,7 @@ import './index.css'
 import { AuthProvider } from './context/AuthContext'
 import { WishlistProvider } from './context/WishlistContext'
 import { HelmetProvider } from "react-helmet-async";
+import { Analytics } from '@vercel/analytics/react'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -14,6 +15,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <HelmetProvider>
           <BrowserRouter>
             <App />
+            <Analytics />
           </BrowserRouter>
         </HelmetProvider>
       </WishlistProvider>

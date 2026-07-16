@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Star, Heart } from "lucide-react";
+import { useWishlist } from "../context/WishlistContext";
 import { supabase } from "../services/supabase";
 
 export default function ProductCard({ product }) {
@@ -8,6 +9,10 @@ export default function ProductCard({ product }) {
   const [activeImage, setActiveImage] = useState(0);
   const timerRef = useRef(null);
   const navigate = useNavigate();
+  const {
+    toggleWishlist,
+    isWishlisted,
+  } = useWishlist();
 
   const images = product.images || [];
 
@@ -45,23 +50,8 @@ export default function ProductCard({ product }) {
       return;
     }
 
-    const { data: existing } = await supabase
-      .from("wishlists")
-      .select("id")
-      .eq("user_id", user.id)
-      .eq("product_id", Number(product.id))
-      .maybeSingle();
-
-    if (existing) {
-      await supabase.from("wishlists").delete().eq("id", existing.id);
-    } else {
-      await supabase.from("wishlists").insert({
-        user_id: user.id,
-        product_id: Number(product.id),
-      });
-    }
+    await toggleWishlist(product.id);
   };
-
   const isColorVariant = product.variantType === "color";
   const swatches = isColorVariant ? product.variants : null;
 
@@ -92,7 +82,13 @@ export default function ProductCard({ product }) {
             onClick={handleWishlistClick}
             className="absolute top-3 right-3 z-30 bg-white rounded-full p-2 shadow-md hover:bg-[#f8f5f2] transition"
           >
-            <Heart className="w-5 h-5 text-[#b49b7f]" />
+            <Heart
+              className={`w-5 h-5 transition-all duration-300 ${
+                isWishlisted(product.id)
+                  ? "fill-red-500 text-red-500 scale-110"
+                  : "text-[#b49b7f] hover:text-red-500"
+              }`}
+            />
           </button>
 
           {images.slice(0, 3).map((img, idx) => (

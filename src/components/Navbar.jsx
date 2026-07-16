@@ -3,12 +3,14 @@ import { Link, useNavigate } from "react-router-dom"
 import { Menu, X, Heart, ChevronDown } from "lucide-react"
 import logo3 from "../assets/logo10.png"
 import { supabase } from "../services/supabase"
+import { useWishlist } from "../context/WishlistContext"
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [user, setUser] = useState(null)
+  const { wishlistCount } = useWishlist()
 
   const navigate = useNavigate()
 
@@ -120,20 +122,29 @@ export default function Navbar() {
               </Link>
             )
           )}
+          {user && (
+            <Link
+              to="/orders"
+              className="hover:text-rose-500 transition-colors"
+            >
+              Orders
+            </Link>
+          )}
+          {user && wishlistCount > 0 && (
+          <Link
+            to="/wishlist"
+            className="flex items-center gap-2 hover:text-rose-500 transition-colors"
+          >
+            <Heart
+              className="w-5 h-5 fill-red-500 text-red-500"
+            />
+            Wishlist
+          </Link>
+        )}
         </div>
 
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center space-x-6">
-          {user && (
-            <button
-              onClick={handleWishlistClick}
-              className="hover:text-rose-500 transition-colors"
-              title="Wishlist"
-            >
-              <Heart className="w-5 h-5" />
-            </button>
-          )}
-
           {!user ? (
             <Link to="/login" className="font-medium hover:text-rose-500">
               Login

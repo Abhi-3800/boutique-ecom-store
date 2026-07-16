@@ -1,10 +1,17 @@
 // src/pages/CategoryCollection.jsx
 import { useParams } from "react-router-dom";
-import { categories } from "../utils/fakeData";
 import { Link } from "react-router-dom";
 
 export default function CategoryCollection() {
   const { id } = useParams();
+  const categories = [
+    { id: 'baby-memory-blankets', name: 'Baby Memory Blankets' },
+    { id: 'dupattas', name: 'Phulkari Dupatta' },
+    { id: 'customized-handkerchief', name: 'Signature Handkerchief' },
+    {id: 'customized-parandis', name: 'Punjabi Parandi'},
+    {id: 'women-palazzo', name: 'Women Palazzo'},
+    {id: 'hairpins', name: 'Hairpins'},
+  ]
   const [products, setProducts] = React.useState([]);
     
     React.useEffect(() => {

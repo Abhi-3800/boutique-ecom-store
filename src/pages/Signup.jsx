@@ -19,7 +19,15 @@ export default function Signup(){
     const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
-      name: name
+      name: name,
+      options: {
+        emailRedirectTo: "https://nodima-designs.com/login",
+        data: {
+          name,
+          phone,
+          address
+        }
+      }
     })
 
     if (error) {

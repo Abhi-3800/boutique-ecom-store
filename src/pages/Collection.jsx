@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react"
-import { categories } from "../utils/fakeData"
 import ProductCard from "../components/ProductCard"
 import { motion } from "framer-motion"
 import { supabase } from "../services/supabase"
@@ -9,6 +8,14 @@ export default function Collection() {
   const [query, setQuery] = useState("")
   const [cat, setCat] = useState("all")
 
+  const categories = [
+    { id: 'baby-memory-blankets', name: 'Baby Memory Blankets' },
+    { id: 'dupattas', name: 'Phulkari Dupatta' },
+    { id: 'customized-handkerchief', name: 'Signature Handkerchief' },
+    {id: 'customized-parandis', name: 'Punjabi Parandi'},
+    {id: 'women-palazzo', name: 'Women Palazzo'},
+    {id: 'hairpins', name: 'Hairpins'},
+  ]
   // Split categories for hybrid
   const visibleCategories = categories.slice(0, 6)
   const moreCategories = categories.slice(2)

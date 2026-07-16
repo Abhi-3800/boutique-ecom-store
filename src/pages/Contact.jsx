@@ -24,7 +24,7 @@ export default function Contact() {
       >
         {/* Contact Form */}
         <motion.form
-          action="https://formspree.io/f/xanbronl"
+          action="https://formspree.io/f/xwvnedey"
           method="POST"
           autoComplete="off"
           className="bg-white rounded-xl shadow-md p-8 text-[#7f6f54]"
